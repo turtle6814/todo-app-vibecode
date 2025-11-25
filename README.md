@@ -55,13 +55,19 @@ Follow these steps to get the project running locally on your machine.
     python manage.py migrate
     ```
 
-5.  **Run the development server:**
+5. **Run test:**
+
+    ```bash
+    python manage.py test todos
+    ```
+   
+6. **Run the development server:**
 
     ```bash
     python manage.py runserver
     ```
 
-6.  **Access the application:**
+7**Access the application:**
 
     Open your browser and go to `http://127.0.0.1:8000/`.
 
