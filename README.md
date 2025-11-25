@@ -51,6 +51,7 @@ Follow these steps to get the project running locally on your machine.
     Initialize the database structure.
 
     ```bash
+    python manage.py makemigrations
     python manage.py migrate
     ```
 
