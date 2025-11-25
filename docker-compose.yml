@@ -1,0 +1,10 @@
+name: todo-app
+
+services:
+  app:
+    image: todo-app:latest
+    container_name: todo-app-container
+    ports:
+      - "8001:8000"
+    volumes:
+      - .:/app
