@@ -1,0 +1,69 @@
+{% extends 'todos/base.html' %}
+
+{% block content %}
+    <div class="row mb-4">
+        <div class="col">
+            <h1>My TODOs</h1>
+        </div>
+        <div class="col text-end">
+            <a href="{% url 'todo_create' %}" class="btn btn-primary">+ New TODO</a>
+        </div>
+    </div>
+
+    <div class="btn-group mb-3" role="group">
+        <a href="{% url 'todo_list' %}"
+           class="btn btn-outline-primary {% if not request.GET.status %}active{% endif %}">All</a>
+        <a href="?status=active"
+           class="btn btn-outline-primary {% if request.GET.status == 'active' %}active{% endif %}">Active</a>
+        <a href="?status=resolved"
+           class="btn btn-outline-primary {% if request.GET.status == 'resolved' %}active{% endif %}">Resolved</a>
+    </div>
+
+    {% if todos %}
+        <div class="list-group">
+            {% for todo in todos %}
+                <div class="list-group-item todo-item {% if todo.is_resolved %}resolved{% endif %} {% if todo.is_overdue %}overdue{% endif %}">
+                    <div class="d-flex w-100 justify-content-between align-items-start">
+                        <div class="flex-grow-1">
+                            <h5 class="mb-1 {% if todo.is_resolved %}text-decoration-line-through{% endif %}">
+                                {{ todo.title }}
+                            </h5>
+                            {% if todo.description %}
+                                <p class="mb-1 text-muted">{{ todo.description }}</p>
+                            {% endif %}
+                            <small>
+                                {% if todo.due_date %}
+                                    <span class="badge {% if todo.is_overdue %}bg-danger{% else %}bg-info{% endif %}">
+                                Due: {{ todo.due_date|date:"M d, Y" }}
+                            </span>
+                                {% endif %}
+                                {% if todo.is_resolved %}
+                                    <span class="badge bg-success">✓ Resolved</span>
+                                {% endif %}
+                            </small>
+                        </div>
+                        <div class="btn-group ms-3" role="group">
+                            <form method="post" action="{% url 'todo_toggle' todo.pk %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-success" title="Toggle status">
+                                    {% if todo.is_resolved %}↶{% else %}✓{% endif %}
+                                </button>
+                            </form>
+                            <a href="{% url 'todo_update' todo.pk %}" class="btn btn-sm btn-outline-primary"
+                               title="Edit">✎</a>
+                            <form method="post" action="{% url 'todo_delete' todo.pk %}" style="display: inline;"
+                                  onsubmit="return confirm('Are you sure you want to delete this TODO?');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">🗑</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            No TODOs found. <a href="{% url 'todo_create' %}">Create your TODO!</a>
+        </div>
+    {% endif %}
+{% endblock %}
