@@ -2,6 +2,7 @@ name: todo-app
 
 services:
   app:
+    build: .
     image: todo-app:latest
     container_name: todo-app-container
     ports:

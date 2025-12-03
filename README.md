@@ -67,9 +67,23 @@ Follow these steps to get the project running locally on your machine.
     python manage.py runserver
     ```
 
-7**Access the application:**
+7. **Access the application:**
 
     Open your browser and go to `http://127.0.0.1:8000/`.
+
+## 🐳 Run with Docker
+
+You can also run the application using Docker Compose.
+
+1.  **Build and run the container:**
+
+    ```bash
+    docker-compose up --build -d
+    ```
+
+2.  **Access the application:**
+
+    Open your browser and go to `http://localhost:8000/`.
 
 ## 📁 Project Structure
 
